@@ -28,23 +28,20 @@ public class PlayerController : MonoBehaviour
         AddLight(light);
     }
 
-    void AddLight(GameObject light) {
+    public void AddLight(GameObject light) {
         _lights.Add(light);
         light.transform.SetParent(transform);
 
         PositionLights();
     }
 
-    LightController RemoveLight() {
-        int lastIndex = _lights.Count - 1;
-        GameObject light = _lights[lastIndex];
-        LightController lightController = light.GetComponent<LightController>();
+    public GameObject RemoveLight() {
+        GameObject light = _lights[0];
         light.transform.parent = null;
-        lightController.Detach();
-        _lights.RemoveAt(lastIndex);
+        _lights.RemoveAt(0);
 
         PositionLights();
-        return lightController;
+        return light;
     }
 
     void PositionLights() {
@@ -74,7 +71,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void Fire() {
-        LightController lightController = RemoveLight();
+        LightController lightController = RemoveLight().GetComponent<LightController>();
         lightController.Fire();
     }
 

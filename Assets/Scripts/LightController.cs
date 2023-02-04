@@ -16,11 +16,17 @@ public class LightController : MonoBehaviour
     private Vector2 _fireDirection;
 
     // Start is called before the first frame update
-    void Start(){}
+    void Start(){
+        _fireDirection = Vector2.zero;
+    }
 
     public void Init(int index, Quaternion rotation, GameObject player) {
         _index = index;
         _rotation = rotation;
+        Attach(player);
+    }
+
+    public void Attach(GameObject player) {
         _player = player;
         SetColor();
     }
@@ -35,15 +41,21 @@ public class LightController : MonoBehaviour
         _fireDirection.Normalize();
     }
 
+    private bool IsFiring() {
+        return _fireDirection != Vector2.zero;
+    }
+
+    private void StopFiring() {
+        _fireDirection = Vector2.zero;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (_player) {
-            Position();
-        }
-
-        if (_fireDirection != null) {
+        if (IsFiring()) {
             transform.position += (Vector3) (FireSpeed * _fireDirection * Time.deltaTime);
+        } else if (_player) {
+            Position();
         }
     }
 
@@ -66,6 +78,41 @@ public class LightController : MonoBehaviour
         light.color = color;
         trailRenderer.startColor = color;
         trailRenderer.endColor = color;
+    }
+
+    void OnCollisionEnter2D(Collision2D other) {
+        Debug.Log("HIT");
+        if (IsFiring()){
+            switch(other.gameObject.tag){
+                case "Wall":
+                    StopFiring();
+                    Detach();
+                    break;
+                case "Player":
+                    if (other.gameObject == _player) {
+                        break;
+                    }
+                    StopFiring();
+                    PlayerController playerController = _player.GetComponent<PlayerController>();
+                    PlayerController otherPlayerController = other.gameObject.GetComponent<PlayerController>();
+                    playerController.AddLight(gameObject);
+                    playerController.AddLight(otherPlayerController.RemoveLight());
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            switch(other.gameObject.tag){
+                case "Player":
+                    if (_player == null) {
+                        PlayerController otherPlayerController = other.gameObject.GetComponent<PlayerController>();
+                        otherPlayerController.AddLight(gameObject);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
 }
