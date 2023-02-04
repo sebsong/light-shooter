@@ -85,7 +85,6 @@ public class LightController : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D other) {
-        Debug.Log("HIT");
         if (IsFiring()){
             switch(other.gameObject.tag){
                 case "Wall":

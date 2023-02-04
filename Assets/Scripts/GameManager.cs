@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     }
 
     public bool IsCurrentPlayer(GameObject player) {
+        _players = GameObject.FindGameObjectsWithTag("Player");
         return _players[_currentPlayerIndex] == player;
     }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -5970405726267927947}
   - component: {fileID: -2921421416958298968}
   - component: {fileID: -5570290083758823858}
+  - component: {fileID: 589122651398339759}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -100,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 10
-  Color: {r: 0, g: 0, b: 0, a: 0}
+  Color: {r: 0.16472101, g: 0, b: 1, a: 0}
   NumInitialLights: 12
 --- !u!58 &-2921421416958298968
 CircleCollider2D:
@@ -139,3 +140,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &589122651398339759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8921980820395498999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
