@@ -58,9 +58,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
-        if (Input.GetButtonDown("Fire1") && _lights.Count > 0) {
-            Fire();
+        if (GameManager.Instance.IsCurrentPlayer(gameObject)) {
+            Move();
+            if (Input.GetButtonDown("Fire1") && _lights.Count > 0) {
+                Fire();
+            }
         }
     }
 
