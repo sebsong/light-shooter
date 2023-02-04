@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private static Object _lightPrefab;
+
     public float Speed;
     public Color Color;
 
-    private static Object _lightPrefab;
     public float NumInitialLights;
-
+    private Rigidbody2D _rigidbody;
     private List<GameObject> _lights;
 
 
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _lightPrefab = Resources.Load("Prefabs/Light");
+        _rigidbody = GetComponent<Rigidbody2D>();
         _lights = new List<GameObject>();
         for (int i = 0; i < NumInitialLights; i++) {
             AddLight();
@@ -64,10 +66,10 @@ public class PlayerController : MonoBehaviour
     }
 
     void Move() {
-        float inputX = Input.GetAxis("Horizontal");
-        float inputY = Input.GetAxis("Vertical");
+        Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
-        transform.Translate(new Vector2(inputX * Speed, inputY * Speed) * Time.deltaTime);
+        transform.Translate(input * Speed * Time.deltaTime);
+        // _rigidbody.MovePosition((Vector2)transform.position + (input * Speed * Time.deltaTime));
     }
 
     void Fire() {

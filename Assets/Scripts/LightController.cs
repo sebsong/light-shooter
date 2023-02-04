@@ -10,6 +10,7 @@ public class LightController : MonoBehaviour
     public float Distance;
     public Color NeutralColor;
 
+    private Rigidbody2D _rigidbody;
     private int _index;
     private Quaternion _rotation;
     private GameObject _player;
@@ -17,6 +18,7 @@ public class LightController : MonoBehaviour
 
     // Start is called before the first frame update
     void Start(){
+        _rigidbody = GetComponent<Rigidbody2D>();
         _fireDirection = Vector2.zero;
     }
 
@@ -54,6 +56,7 @@ public class LightController : MonoBehaviour
     {
         if (IsFiring()) {
             transform.position += (Vector3) (FireSpeed * _fireDirection * Time.deltaTime);
+            // _rigidbody.MovePosition((Vector2) transform.position + (FireSpeed * _fireDirection * Time.deltaTime));
         } else if (_player) {
             Position();
         }
@@ -63,6 +66,7 @@ public class LightController : MonoBehaviour
         _rotation *= Quaternion.AngleAxis(-RotateSpeed * Time.deltaTime, Vector3.forward);
         Vector2 position = _player.transform.position + (_rotation * Vector2.up * Distance);
         transform.position = Vector2.Lerp(transform.position, position, MoveSpeed * Time.deltaTime);
+        // _rigidbody.MovePosition((Vector2) transform.position + (position * MoveSpeed * Time.deltaTime));
     }
 
     void SetColor() {
